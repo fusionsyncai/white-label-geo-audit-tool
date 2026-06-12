@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: geo
+      POSTGRES_PASSWORD: geo
+      POSTGRES_DB: geo_reports
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U geo -d geo_reports"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://geo-report.fusionsync.ai}
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://geo-report.fusionsync.ai}
+      DATABASE_URL: postgresql://geo:geo@db:5432/geo_reports
+      DATA_DIR: /data
+      GEO_SKILL_PATH: /app/geo-skill
+      CHROME_BIN: /usr/bin/chromium
+      CURSOR_API_KEY: ${CURSOR_API_KEY}
+      CURSOR_AGENT_BIN: cursor-agent
+      CURSOR_AGENT_MODEL: ${CURSOR_AGENT_MODEL:-auto}
+      CURSOR_AGENT_AUTO_APPROVE: "1"
+      CURSOR_AGENT_APPROVE_MCPS: "1"
+      MAX_CONCURRENT_AUDITS: ${MAX_CONCURRENT_AUDITS:-2}
+      DEFAULT_BRAND_NAME: FusionSync AI
+      DEFAULT_ACCENT_COLOR: "#2563eb"
+      DEFAULT_BRAND_CONTACT: https://www.fusionsync.ai
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      EMAIL_FROM: ${EMAIL_FROM:-FusionSync SEO <onboarding@resend.dev>}
+      API_SECRET: ${API_SECRET:-}
+    volumes:
+      - appdata:/data
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  appdata:

@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GEO Report Generator
 
-## Getting Started
+Free, authless **white-label GEO audit tool** for agencies. Paste a prospect URL, run a comprehensive AI search visibility audit via `cursor-agent` + geo skills, and download a branded PDF.
 
-First, run the development server:
+## Quick start (Docker)
+
+1. Copy env and set your Cursor API key:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env
+# Edit .env and set CURSOR_API_KEY=cursor_...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Build and run:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+docker compose up --build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Open [http://localhost:3000](http://localhost:3000), enter a URL, and wait on the report page for the audit to complete.
 
-## Learn More
+## User flow
 
-To learn more about Next.js, take a look at the following resources:
+1. **Landing** — enter prospect URL
+2. **Processing** — `/report/<uuid>` polls job status (`queued` → `auditing` → `rendering` → `done`)
+3. **Result** — embedded PDF + download; optional white-label branding (company name, logo, accent color)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Each `POST /api/v1/agent/generate-report` spawns a **fresh** `cursor-agent` session (no `--resume`).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API
 
-## Deploy on Vercel
+| Method | Route | Description |
+|--------|-------|-------------|
+| `POST` | `/api/v1/agent/generate-report` | `{ "url": "https://example.com" }` → `202 { uuid }` |
+| `GET` | `/api/v1/report/:uuid/status` | Poll job status |
+| `GET` | `/api/v1/report/:uuid/pdf` | Stream PDF (`?download=1` to attach) |
+| `POST` | `/api/v1/report/:uuid/pdf` | Re-render with branding (multipart: `companyName`, `accentColor`, `logo`) |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Local dev (without Docker)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Requires: Node 22, Postgres, `cursor-agent`, Chrome/Chromium, Python 3 + geo-skill deps.
+
+```bash
+npm install
+cp .env.example .env.local
+# Set DATABASE_URL=postgresql://geo:geo@localhost:5433/geo_reports
+docker compose up db -d   # or your own Postgres
+npm run dev
+```
+
+## Project structure
+
+- `lib/cursorAgent.ts` — spawns fresh cursor-agent sessions (telegram-bridge pattern)
+- `lib/geoAudit.ts` — audit prompt + markdown parsing
+- `lib/jobs.ts` — async job orchestration
+- `lib/pdf.ts` — markdown → HTML → headless Chrome PDF
+- `geo-skill/` — vendored GEO audit skills + scripts
+- `templates/` — white-label PDF HTML/CSS templates
+
+## Docs
+
+See [docs/project.md](docs/project.md) for architecture and product decisions.

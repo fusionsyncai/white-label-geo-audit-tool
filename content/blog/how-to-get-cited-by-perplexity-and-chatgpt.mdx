@@ -1,0 +1,81 @@
+---
+title: "How to Get Cited by Perplexity and ChatGPT"
+description: "Perplexity and ChatGPT recommend brands based on consensus, citability, and entity authority — not raw backlinks. Here is how to become a source these answer engines quote and recommend."
+slug: "how-to-get-cited-by-perplexity-and-chatgpt"
+publishedAt: "2026-06-09"
+updatedAt: "2026-06-09"
+author: "FusionSync AI"
+category: "LLM Visibility"
+tags: ["Perplexity", "ChatGPT", "AI citations", "brand mentions", "GEO"]
+featured: true
+draft: false
+---
+
+Ask Perplexity or ChatGPT "what's the best tool for X" and you get a short list of named brands with sources. For the brands on that list, it is the highest-intent placement on the internet: a direct recommendation at the moment of decision. For everyone else, it is silence.
+
+Getting onto that list is a different game than classic SEO. Perplexity and ChatGPT do not rank pages the way Google does — they synthesize answers from retrieved sources and from what the model has learned about your brand as an *entity*. Here is how to earn the citation and the recommendation.
+
+## Two engines, two retrieval styles
+
+Although both produce cited answers, they get there differently.
+
+**Perplexity** is search-first. For most queries it performs live retrieval — it searches the web, pulls a set of sources, and writes an answer grounded in them with inline citations. Your job is to be in that retrieved set and to be the most quotable source in it.
+
+**ChatGPT** blends two modes. With browsing/search enabled, it behaves like Perplexity — live retrieval and citations. Without it, answers draw on the model's parametric memory: what it absorbed about your brand during training. Winning here is about being a recognized, frequently and consistently described entity across the web.
+
+The strategy that covers both: be **highly citable for live retrieval** and a **well-established entity for parametric recall**.
+
+> Pitching a B2B client? Generate a custom-branded LLM visibility report with our [free GEO audit tool](/) and show them exactly where competitors are out-citing them inside ChatGPT and Perplexity.
+
+## Win live retrieval (Perplexity and ChatGPT search)
+
+Live retrieval rewards the same passage-level citability that AI Overviews do — with an extra emphasis on directness and freshness.
+
+- **Answer the question in the first sentence.** Engines lift the cleanest, most direct passage. Bury the answer and you lose to a competitor who led with it.
+- **Make claims quotable and self-contained.** A sentence that stands on its own — "X reduces onboarding time by 40% on average" — is far more liftable than the same idea spread across a paragraph.
+- **Attach numbers to sources.** Statistics get cited disproportionately, especially when the figure is specific and sourced.
+- **Use clean structure.** Headings phrased as questions, lists for steps, tables for comparisons. Perplexity loves a well-built comparison table.
+- **Stay fresh.** For "best of" and comparison queries, recency is a strong signal. Update and date your cornerstone pages.
+
+## Win entity authority (ChatGPT parametric memory)
+
+This is where backlinks-era thinking misleads people. A model's understanding of your brand comes from **how the web collectively describes you**, not from your link count. Consensus across authoritative, contextually relevant sources is what builds a durable entity.
+
+What moves the needle:
+
+- **Consistent brand description everywhere.** Your one-line "what we do" should read the same on your site, your LinkedIn, directories, review sites, and press. Inconsistency dilutes the entity.
+- **Presence in the corpora models trust.** Wikipedia and Wikidata, reputable industry publications, well-moderated communities (Reddit, Stack Overflow where relevant), G2/Capterra-style review platforms, and respected directories. These are over-represented in training and grounding data.
+- **Third-party mentions in the right context.** Being named alongside the category and your competitors teaches the model where you belong. "Tools like A, B, and *YourBrand*" is gold.
+- **Structured identity.** `Organization` JSON-LD with `sameAs` links to your authoritative profiles helps engines resolve and connect your entity.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Your Brand",
+  "url": "https://yourbrand.com",
+  "sameAs": [
+    "https://www.linkedin.com/company/yourbrand",
+    "https://www.crunchbase.com/organization/yourbrand",
+    "https://www.g2.com/products/yourbrand"
+  ]
+}
+```
+
+## Why backlinks alone won't save you
+
+A page can have strong backlinks and still never get cited by an answer engine, because the engine is not ranking that page — it is judging whether your *content* answers the query cleanly and whether your *brand* is a trusted entity for the topic. Authority that lives only as link equity, with no consistent entity footprint and no quotable passages, is invisible to this layer.
+
+That is also why challenger brands can punch above their weight here: disciplined citability plus a coherent entity story can beat a bigger competitor who never adapted from the link-building era.
+
+## A practical citation plan
+
+1. **Map the queries** where you want to be recommended, and run them in Perplexity and ChatGPT today to see who is cited.
+2. **Audit citability** on the pages that should win those queries — front-load answers, add sourced stats, fix structure.
+3. **Shore up the entity** — align your brand description across profiles, add `Organization` schema with `sameAs`, pursue mentions in trusted sources.
+4. **Earn contextual co-mentions** in roundups, comparisons, and community threads.
+5. **Re-test monthly.** Track citation share and where you appear, not just rankings.
+
+> Building entity authority and citability across an entire brand footprint is an ongoing operation, not a one-off. See how [FusionSync AI](https://www.fusionsync.ai/services) systematizes AI visibility, or [book an AI audit call](https://cal.com/fusionsyncai/ai-audit) to get a tailored plan.
+
+Citations in Perplexity and ChatGPT go to brands that are both *easy to quote* and *easy to trust*. Engineer for both, and you stop hoping to be mentioned — you start being the default recommendation.

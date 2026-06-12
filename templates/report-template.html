@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>GEO Audit Report — {{BRAND_NAME}}</title>
+  <style>
+    :root { --accent: {{ACCENT_COLOR}}; }
+    {{CSS}}
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <div class="cover-top">
+      <img class="cover-logo" src="{{LOGO_DATA_URI}}" alt="{{COMPANY_NAME}}" />
+      <div class="cover-prepared">
+        Prepared by
+        <strong>{{COMPANY_NAME}}</strong>
+        {{CONTACT}}
+      </div>
+    </div>
+    <h1>GEO Audit Report</h1>
+    <div class="domain">{{DOMAIN}}</div>
+    <div class="score-badge" style="border-color: {{BADGE_COLOR}}">
+      <span class="score-num" style="color: {{BADGE_COLOR}}">{{GEO_SCORE}}</span>
+      <span class="score-label">{{SCORE_LABEL}}</span>
+    </div>
+    <p style="font-size:11pt;color:#cbd5e1;max-width:520px">
+      {{SCORE_SUBTEXT}}
+    </p>
+    <div class="cover-cta">
+      {{COVER_CTA}}
+    </div>
+  </section>
+
+  <section class="content">
+    {{BODY_HTML}}
+    <div class="footer-note">
+      Report prepared by {{COMPANY_NAME}} · {{CONTACT}}
+    </div>
+  </section>
+</body>
+</html>
