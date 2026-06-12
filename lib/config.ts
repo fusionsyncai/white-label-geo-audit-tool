@@ -31,7 +31,7 @@ export const config = {
   resendApiKey: process.env.RESEND_API_KEY?.trim() || "",
   emailFrom:
     process.env.EMAIL_FROM?.trim() ||
-    "FusionSync GEO <onboarding@resend.dev>",
+    "FusionSync AI <reports@geo-report.fusionsync.ai>",
   apiSecret: process.env.API_SECRET?.trim() || "",
   defaultBrand: {
     companyName: process.env.DEFAULT_BRAND_NAME?.trim() || "FusionSync AI",

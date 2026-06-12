@@ -38,7 +38,7 @@ services:
       DEFAULT_ACCENT_COLOR: "#2563eb"
       DEFAULT_BRAND_CONTACT: https://www.fusionsync.ai
       RESEND_API_KEY: ${RESEND_API_KEY:-}
-      EMAIL_FROM: ${EMAIL_FROM:-FusionSync SEO <onboarding@resend.dev>}
+      EMAIL_FROM: ${EMAIL_FROM:-FusionSync AI <reports@geo-report.fusionsync.ai>}
       API_SECRET: ${API_SECRET:-}
     volumes:
       - appdata:/data

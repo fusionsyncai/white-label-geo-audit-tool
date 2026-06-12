@@ -1,4 +1,4 @@
-# SEO & GEO Strategy — FusionSync GEO Report Generator
+# SEO & GEO Strategy — FusionSync AI Report Generator
 
 This document is the core SEO/GEO strategy for our free white-label GEO audit tool. It is adapted from the original Gemini-recommended spec, with two key changes baked in:
 

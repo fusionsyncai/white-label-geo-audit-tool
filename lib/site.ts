@@ -2,8 +2,8 @@ const rawSiteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://geo-report.fusionsync.ai";
 
 export const siteConfig = {
-  name: "FusionSync GEO Report Generator",
-  shortName: "FusionSync GEO",
+  name: "FusionSync AI Report Generator",
+  shortName: "FusionSync AI",
   url: rawSiteUrl.replace(/\/$/, ""),
   title:
     "Free White-Label AI SEO & GEO Report Generator | FusionSync",

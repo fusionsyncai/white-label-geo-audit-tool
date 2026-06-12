@@ -50,7 +50,7 @@ export async function sendReportReadyEmail(opts: NotifyOptions): Promise<void> {
   <body style="margin:0;background:#f1f5f9;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#0f172a;">
     <div style="max-width:520px;margin:0 auto;padding:32px 20px;">
       <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;padding:32px;">
-        <p style="margin:0 0 4px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#2563eb;">FusionSync GEO</p>
+        <p style="margin:0 0 4px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#2563eb;">FusionSync AI</p>
         <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;color:#0f172a;">${heading}</h1>
         <p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#475569;">${body}</p>
         <a href="${reportUrl}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:12px 22px;border-radius:10px;">${ctaLabel}</a>
