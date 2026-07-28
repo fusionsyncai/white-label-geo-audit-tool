@@ -103,21 +103,22 @@ Your deliverable is GEO-AUDIT-REPORT.md — a comprehensive, client-ready markdo
 `;
 }
 
-export async function runGeoAudit(uuid: string, url: string): Promise<{
+async function runAuditWithModel(
+  uuid: string,
+  prompt: string,
+  cwd: string,
+  model: string
+): Promise<{
   markdownPath: string;
   markdown: string;
   parsed: ParsedScore;
 }> {
-  const cwd = await ensureWorkEnvironment(uuid);
-  const outDir = path.dirname(reportMarkdownPath(uuid));
-  await fs.mkdir(outDir, { recursive: true });
-
-  const prompt = buildAuditPrompt(url);
-  const result = await runCursorAgent(prompt, cwd);
+  console.log(`[geo-audit] running cursor-agent with model=${model} uuid=${uuid}`);
+  const result = await runCursorAgent(prompt, cwd, model);
 
   if (result.exitCode !== 0 && !result.reply.trim()) {
     throw new Error(
-      `cursor-agent exited with code ${result.exitCode}: ${result.reply || "no output"}`
+      `cursor-agent (${model}) exited with code ${result.exitCode}: ${result.reply || "no output"}`
     );
   }
 
@@ -142,7 +143,7 @@ export async function runGeoAudit(uuid: string, url: string): Promise<{
 
   if (!markdown) {
     throw new Error(
-      `GEO-AUDIT-REPORT.md not found after agent run. Agent reply: ${result.reply.slice(0, 500)}`
+      `GEO-AUDIT-REPORT.md not found after agent run (model=${model}). Agent reply: ${result.reply.slice(0, 500)}`
     );
   }
 
@@ -153,4 +154,31 @@ export async function runGeoAudit(uuid: string, url: string): Promise<{
 
   const parsed = parseScoreFromMarkdown(markdown);
   return { markdownPath: dest, markdown, parsed };
+}
+
+export async function runGeoAudit(uuid: string, url: string): Promise<{
+  markdownPath: string;
+  markdown: string;
+  parsed: ParsedScore;
+}> {
+  const cwd = await ensureWorkEnvironment(uuid);
+  const outDir = path.dirname(reportMarkdownPath(uuid));
+  await fs.mkdir(outDir, { recursive: true });
+
+  const prompt = buildAuditPrompt(url);
+  const { cursorPrimaryModel, cursorFallbackModel } = config;
+
+  try {
+    return await runAuditWithModel(uuid, prompt, cwd, cursorPrimaryModel);
+  } catch (primaryErr) {
+    if (cursorPrimaryModel === cursorFallbackModel) {
+      throw primaryErr;
+    }
+    console.warn(
+      `[geo-audit] model ${cursorPrimaryModel} failed for uuid=${uuid}, retrying with ${cursorFallbackModel}: ${
+        primaryErr instanceof Error ? primaryErr.message : String(primaryErr)
+      }`
+    );
+    return runAuditWithModel(uuid, prompt, cwd, cursorFallbackModel);
+  }
 }

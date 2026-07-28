@@ -57,13 +57,14 @@ export function parseAgentJson(
 export function runCursorAgent(
   prompt: string,
   cwd: string,
+  model: string = config.cursorPrimaryModel,
   onProc?: (proc: ChildProcess) => void
 ): Promise<AgentResult> {
   const cmd = [
     config.cursorAgentBin,
     "-p",
     "--model",
-    config.cursorModel,
+    model,
     "--output-format",
     "json",
   ];

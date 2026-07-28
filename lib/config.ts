@@ -16,7 +16,16 @@ export const config = {
     "postgresql://geo:geo@localhost:5432/geo_reports",
   cursorApiKey: process.env.CURSOR_API_KEY?.trim() || "",
   cursorAgentBin: process.env.CURSOR_AGENT_BIN?.trim() || "cursor-agent",
-  cursorModel: process.env.CURSOR_AGENT_MODEL?.trim() || "auto",
+  /** Primary model; falls back to cursorFallbackModel on failure. */
+  cursorPrimaryModel:
+    process.env.CURSOR_AGENT_PRIMARY_MODEL?.trim() || "composer-2.5",
+  cursorFallbackModel:
+    process.env.CURSOR_AGENT_FALLBACK_MODEL?.trim() || "auto",
+  /** @deprecated use cursorPrimaryModel — kept for logs/back-compat */
+  cursorModel:
+    process.env.CURSOR_AGENT_PRIMARY_MODEL?.trim() ||
+    process.env.CURSOR_AGENT_MODEL?.trim() ||
+    "composer-2.5",
   autoApprove: envFlag("CURSOR_AGENT_AUTO_APPROVE", true),
   approveMcps: envFlag("CURSOR_AGENT_APPROVE_MCPS", true),
   geoSkillPath:
